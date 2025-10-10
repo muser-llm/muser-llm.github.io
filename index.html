@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MuSeR: Enhancing Medical Context-Awareness of LLMs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.7;
+            color: #333;
+            background: #fff;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-size: 2.8em;
+            font-weight: 600;
+            color: #111;
+            margin-bottom: 25px;
+            line-height: 1.3;
+        }
+
+        .authors {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .links {
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .links a {
+            display: inline-block;
+            padding: 12px 28px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        .links a:hover {
+            background: #1d4ed8;
+        }
+
+        section {
+            margin-bottom: 70px;
+        }
+
+        h2 {
+            font-size: 2.2em;
+            font-weight: 600;
+            color: #111;
+            margin-bottom: 30px;
+        }
+
+        h3 {
+            font-size: 1.5em;
+            font-weight: 600;
+            color: #333;
+            margin-top: 35px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.05em;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .abstract-text {
+            font-size: 1.1em;
+            line-height: 1.9;
+        }
+
+        ul, ol {
+            margin-left: 25px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 12px;
+            font-size: 1.05em;
+            line-height: 1.7;
+        }
+
+        .method-list {
+            counter-reset: method-counter;
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .method-list > li {
+            counter-increment: method-counter;
+            margin-bottom: 30px;
+            padding-left: 40px;
+            position: relative;
+        }
+
+        .method-list > li::before {
+            content: counter(method-counter) ".";
+            position: absolute;
+            left: 0;
+            font-size: 1.5em;
+            font-weight: 600;
+            color: #2563eb;
+        }
+
+        .method-list > li strong {
+            font-size: 1.2em;
+            display: block;
+            margin-bottom: 10px;
+            color: #111;
+        }
+
+        .figure {
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .figure img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+        }
+
+        .figure-caption {
+            margin-top: 12px;
+            font-size: 0.95em;
+            color: #666;
+            font-style: italic;
+        }
+
+        .placeholder-img {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9ca3af;
+            font-size: 1.1em;
+        }
+
+        .highlight-box {
+            background: #f0f9ff;
+            border-left: 4px solid #2563eb;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 4px;
+        }
+
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin: 35px 0;
+        }
+
+        .metric-item {
+            text-align: center;
+            padding: 25px;
+            background: #f9fafb;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .metric-value {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #2563eb;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .metric-label {
+            font-size: 1em;
+            color: #666;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 35px;
+        }
+
+        .resource-card {
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 30px;
+            transition: all 0.3s;
+        }
+
+        .resource-card:hover {
+            border-color: #2563eb;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .resource-card h3 {
+            margin-top: 0;
+            font-size: 1.3em;
+            margin-bottom: 12px;
+        }
+
+        .resource-card p {
+            color: #666;
+            font-size: 0.98em;
+            margin-bottom: 18px;
+            text-align: left;
+        }
+
+        .resource-card a {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 0.95em;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        .resource-card a:hover {
+            background: #1d4ed8;
+        }
+
+        .resource-card a.coming-soon {
+            background: #e5e7eb;
+            color: #666;
+            cursor: not-allowed;
+        }
+
+        .citation-box {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 25px;
+            margin-top: 25px;
+        }
+
+        .citation-box pre {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+            overflow-x: auto;
+            color: #333;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid #e5e7eb;
+            margin-top: 80px;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            h2 {
+                font-size: 1.8em;
+            }
+
+            .links {
+                flex-direction: column;
+            }
+
+            .links a {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Enhancing the Medical Context-Awareness Ability of LLMs via Multifaceted Self-Refinement Learning</h1>
+            <div class="authors">Anonymous Authors</div>
+            <div class="links">
+                <a href="#">📄 Paper</a>
+                <a href="https://anonymous.4open.science/r/MuSeR-EC43">💻 Code</a>
+                <a href="#resources">📦 Resources</a>
+            </div>
+        </header>
+
+        <section id="abstract">
+            <h2>Abstract</h2>
+            <p class="abstract-text">Large language models (LLMs) have shown great promise in the medical domain, achieving strong performance on several benchmarks. However, they continue to underperform in real-world medical scenarios, which often demand stronger <strong>context-awareness</strong>, i.e., the ability to recognize missing or critical details (e.g., user identity, medical history, risk factors) and provide safe, helpful, and contextually appropriate responses.</p>
+            
+            <p class="abstract-text">To address this issue, we propose <strong>Multifaceted Self-Refinement (MuSeR)</strong>, a data-driven approach that enhances LLMs' context-awareness along three key facets (decision-making, communication, and safety) through self-evaluation and refinement. Specifically, we first design an attribute-conditioned query generator that simulates diverse real-world user contexts by varying attributes such as role, geographic region, intent, and degree of information ambiguity. An LLM then responds to these queries, self-evaluates its answers along three key facets, and refines its responses to better align with the requirements of each facet. Finally, the queries and refined responses are used for supervised fine-tuning to reinforce the model's context-awareness ability.</p>
+            
+            <p class="abstract-text">Evaluation results on the latest HealthBench dataset demonstrate that our method significantly improves LLM performance across multiple aspects, with particularly notable gains in the context-awareness axis. Furthermore, by incorporating knowledge distillation with the proposed method, the performance of a smaller backbone LLM (e.g., Qwen3-32B) surpasses its teacher model, achieving a new SOTA across all open-source LLMs on HealthBench (63.8%) and its hard subset (43.1%).</p>
+        </section>
+
+        <section id="method">
+            <h2>Method</h2>
+            
+            <p>To address the limitations of current medical LLMs in real-world scenarios, we introduce <strong>MuSeR (Multifaceted Self-Refinement)</strong>, a novel approach that enhances context-awareness through task-specific query generation and multi-faceted self-refinement. MuSeR features two core components:</p>
+
+            <ol class="method-list">
+                <li>
+                    <strong>Attribute-Conditioned Query Generation</strong>
+                    <p>We design a query generator that simulates diverse real-world user contexts by systematically varying key attributes including user role (patient, caregiver, healthcare provider), geographic region, intent (information-seeking, decision-making, emotional support), and degree of information ambiguity. This approach ensures comprehensive coverage of realistic medical scenarios that require strong context-awareness.</p>
+                </li>
+                
+                <li>
+                    <strong>Multifaceted Self-Evaluation and Refinement</strong>
+                    <p>Moving beyond simple response generation, MuSeR jointly incorporates three critical facets into the evaluation and refinement process:</p>
+                    <ul>
+                        <li><strong>Decision-Making:</strong> Ensuring clinical recommendations are appropriate given the available context and user needs</li>
+                        <li><strong>Communication:</strong> Adapting language, tone, and detail level to match user characteristics and situations</li>
+                        <li><strong>Safety:</strong> Identifying potential risks, missing critical information, and avoiding harmful advice</li>
+                    </ul>
+                    <p>The model iteratively evaluates and refines its responses along these dimensions, producing contextually appropriate and safe medical guidance.</p>
+                </li>
+            </ol>
+
+            <div class="figure">
+                <div class="placeholder-img">Method Architecture Diagram (Add your figure here)</div>
+                <div class="figure-caption">Figure 1: Overview of the MuSeR framework</div>
+            </div>
+
+            <h3>Supervised Fine-Tuning with Refined Data</h3>
+            <p>The refined query-response pairs, which have been iteratively improved through multi-faceted self-evaluation, are used for supervised fine-tuning. This reinforcement learning process enables the model to internalize context-awareness principles and consistently apply them to new medical queries across diverse scenarios.</p>
+        </section>
+
+        <section id="results">
+            <h2>Experimental Results</h2>
+
+            <h3>Performance on HealthBench</h3>
+            <p>We evaluate MuSeR on HealthBench, a comprehensive benchmark designed to assess medical LLMs across multiple dimensions including context-awareness, clinical knowledge, reasoning, and safety. Our results demonstrate substantial improvements over baseline models:</p>
+
+            <div class="metrics">
+                <div class="metric-item">
+                    <span class="metric-value">63.8%</span>
+                    <span class="metric-label">HealthBench Score</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-value">43.1%</span>
+                    <span class="metric-label">Hard Subset</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-value">SOTA</span>
+                    <span class="metric-label">Open-Source LLMs</span>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <strong>Key Finding:</strong> By incorporating knowledge distillation with MuSeR, a smaller backbone model (Qwen3-32B) achieves performance that surpasses its teacher model, establishing a new state-of-the-art among all open-source medical LLMs. The most significant improvements are observed in context-awareness metrics, validating our approach's effectiveness in enhancing this critical capability.
+            </div>
+
+            <div class="figure">
+                <div class="placeholder-img">Performance Comparison Chart (Add your figure here)</div>
+                <div class="figure-caption">Figure 2: Comparison with baseline models on HealthBench</div>
+            </div>
+
+            <h3>Key Improvements</h3>
+            <ul>
+                <li>Significant gains in context-awareness across diverse medical scenarios</li>
+                <li>Enhanced ability to identify missing or critical information in user queries</li>
+                <li>Improved safety in responses, particularly for ambiguous or high-risk situations</li>
+                <li>Better adaptation of communication style to different user contexts and needs</li>
+                <li>Superior performance in both standard and challenging test cases</li>
+            </ul>
+
+            <div class="figure">
+                <div class="placeholder-img">Qualitative Examples (Add your figure here)</div>
+                <div class="figure-caption">Figure 3: Qualitative comparison of responses before and after MuSeR refinement</div>
+            </div>
+        </section>
+
+        <section id="resources">
+            <h2>Resources</h2>
+            <p>We are committed to open science and reproducible research. The following resources will be released upon publication:</p>
+
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <h3>📄 Paper</h3>
+                    <p>Full paper with detailed methodology, experiments, and comprehensive analysis</p>
+                    <a href="#" class="coming-soon">Coming Soon</a>
+                </div>
+
+                <div class="resource-card">
+                    <h3>💻 Code</h3>
+                    <p>Complete implementation including training scripts, evaluation pipelines, and data processing tools</p>
+                    <a href="https://anonymous.4open.science/r/MuSeR-EC43">View Repository</a>
+                </div>
+
+                <div class="resource-card">
+                    <h3>📊 Dataset</h3>
+                    <p>Curated dataset with attribute-conditioned queries and multi-faceted refined responses</p>
+                    <a href="#" class="coming-soon">Coming Soon</a>
+                </div>
+
+                <div class="resource-card">
+                    <h3>🤖 Model Weights</h3>
+                    <p>Pre-trained checkpoints for Qwen3-32B fine-tuned with MuSeR</p>
+                    <a href="#" class="coming-soon">Coming Soon</a>
+                </div>
+
+                <div class="resource-card">
+                    <h3>📚 Documentation</h3>
+                    <p>Comprehensive guides for training, evaluation, and deployment of MuSeR models</p>
+                    <a href="#" class="coming-soon">Coming Soon</a>
+                </div>
+
+                <div class="resource-card">
+                    <h3>🎯 Demo</h3>
+                    <p>Interactive demonstration showcasing MuSeR's context-awareness capabilities</p>
+                    <a href="#" class="coming-soon">Coming Soon</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="citation">
+            <h2>Citation</h2>
+            <p>If you find this work useful for your research, please cite:</p>
+            <div class="citation-box">
+                <pre>@article{muser2025,
+  title={Enhancing the Medical Context-Awareness Ability of LLMs 
+         via Multifaceted Self-Refinement Learning},
+  author={Anonymous Authors},
+  journal={Under Review},
+  year={2025}
+}</pre>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2025 Anonymous Authors. All rights reserved.</p>
+            <p>Contact information will be provided upon deanonymization.</p>
+        </footer>
+    </div>
+</body>
+</html>
