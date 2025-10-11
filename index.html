@@ -324,12 +324,15 @@
         <section id="abstract">
             <h2>Abstract</h2>
             <p class="abstract-text">Large language models (LLMs) have shown great promise in the medical domain, achieving strong performance on several benchmarks. However, they continue to underperform in real-world medical scenarios, which often demand stronger <strong>context-awareness</strong>, i.e., the ability to recognize missing or critical details (e.g., user identity, medical history, risk factors) and provide safe, helpful, and contextually appropriate responses.</p>
-            
+            <div class="figure">
+                <div class="placeholder-img">Method Architecture Diagram (Add your figure here)</div>
+                <div class="figure-caption">(a) Comparison between medical exam questions and real-world medical scenarios. (b) A bird view of the proposed Multifaceted Self-Refinement learning framework (<strong>MuSeR</strong>).</div>
+            </div>
             <p class="abstract-text">To address this issue, we propose <strong>Multifaceted Self-Refinement (MuSeR)</strong>, a data-driven approach that enhances LLMs' context-awareness along three key facets (decision-making, communication, and safety) through self-evaluation and refinement. Specifically, we first design an attribute-conditioned query generator that simulates diverse real-world user contexts by varying attributes such as role, geographic region, intent, and degree of information ambiguity. An LLM then responds to these queries, self-evaluates its answers along three key facets, and refines its responses to better align with the requirements of each facet. Finally, the queries and refined responses are used for supervised fine-tuning to reinforce the model's context-awareness ability.</p>
             
-            <p class="abstract-text">Evaluation results on the latest HealthBench dataset demonstrate that our method significantly improves LLM performance across multiple aspects, with particularly notable gains in the context-awareness axis. Furthermore, by incorporating knowledge distillation with the proposed method, the performance of a smaller backbone LLM (e.g., Qwen3-32B) surpasses its teacher model, achieving a new SOTA across all open-source LLMs on HealthBench (**63.8%**) and its hard subset (**43.1%**).</p>
+            <p class="abstract-text">Evaluation results on the latest HealthBench dataset demonstrate that our method significantly improves LLM performance across multiple aspects, with particularly notable gains in the context-awareness axis. Furthermore, by incorporating knowledge distillation with the proposed method, the performance of a smaller backbone LLM (e.g., Qwen3-32B) surpasses its teacher model (GPT-oss-120B), achieving a new SOTA across all open-source LLMs on HealthBench (<strong>63.8%</strong>) and its hard subset (<strong>43.1%</strong>).</p>
         </section>
-
+        
         <section id="method">
             <h2>Method</h2>
             
@@ -355,7 +358,7 @@
 
             <div class="figure">
                 <div class="placeholder-img">Method Architecture Diagram (Add your figure here)</div>
-                <div class="figure-caption">Figure 1: Overview of the MuSeR framework</div>
+                <div class="figure-caption">Figure 2: Overview of the MuSeR framework</div>
             </div>
 
             <h3>Supervised Fine-Tuning with Refined Data</h3>
