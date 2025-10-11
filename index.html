@@ -343,7 +343,7 @@
                 <li>
                     <strong>Attribute-Conditioned Query Generation</strong>
                     <p>Firstly, we design a query generator to simulate the complexity of real-world query distribution. Specifically, we assume that the real-world query is controlled by a set of attributes 
-        <div class="mathjax-demo">$mathbf{a} = \{a_1, a_2, \dots, a_N\}$</div> (e.g., user role, intent, geographic location). Built on that, the proposed attribute-conditioned query generator first samples a set of attributes <div class="mathjax-demo">$\mathbf{a}$</div> from a prior distribution <div class="mathjax-demo">$P_{\mathrm{Attr}}(\cdot)$</div>, and then generates a query <div class="mathjax-demo">$q \sim G(\cdot|\mathbf{a})$</div> conditioned on the sampled attributes.
+        <div class="mathjax-demo">$$mathbf{a} = \{a_1, a_2, \dots, a_N\}$$</div> (e.g., user role, intent, geographic location). Built on that, the proposed attribute-conditioned query generator first samples a set of attributes <div class="mathjax-demo">$$\mathbf{a}$$</div> from a prior distribution <div class="mathjax-demo">$$P_{\mathrm{Attr}}(\cdot)$$</div>, and then generates a query <div class="mathjax-demo">$$q \sim G(\cdot|\mathbf{a})$$</div> conditioned on the sampled attributes.
     </p>
                     <p>In our framework, we consider a total of seven key attributes for query generation. These attributes are chosen to capture the diversity and complexity of real-world medical queries:</p>
     <ol>
