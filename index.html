@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)']],   
+        displayMath: [['\\[', '\\]']],  
+        packages: ['base', 'ams']       
+      }
+    };
+    </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -343,7 +352,7 @@
                 <li>
                     <strong>Attribute-Conditioned Query Generation</strong>
                     <p>Firstly, we design a query generator to simulate the complexity of real-world query distribution. Specifically, we assume that the real-world query is controlled by a set of attributes 
-        <div class="mathjax-demo">$$mathbf{a} = \{a_1, a_2, \dots, a_N\}$$</div> (e.g., user role, intent, geographic location). Built on that, the proposed attribute-conditioned query generator first samples a set of attributes <div class="mathjax-demo">$$\mathbf{a}$$</div> from a prior distribution <div class="mathjax-demo">$$P_{\mathrm{Attr}}(\cdot)$$</div>, and then generates a query <div class="mathjax-demo">$$q \sim G(\cdot|\mathbf{a})$$</div> conditioned on the sampled attributes.
+        <span>\\(\mathbf{a} = \{a_1, a_2, \dots, a_N\}\\)</span> (e.g., user role, intent, geographic location). Built on that, the proposed attribute-conditioned query generator first samples a set of attributes <span>\\(\mathbf{a}\\)</span> from a prior distribution <span>\\(P_{\mathrm{Attr}}(\cdot)\\)</span>, and then generates a query <span>\\(q \sim G(\cdot|\mathbf{a})\\)</span> conditioned on the sampled attributes.
     </p>
                     <p>In our framework, we consider a total of seven key attributes for query generation. These attributes are chosen to capture the diversity and complexity of real-world medical queries:</p>
     <ol>
