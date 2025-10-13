@@ -421,17 +421,13 @@
                 </div>
             </div>
 
-            <div class="figure">
-                <img src="healthbench_combined_bar_chart.pdf" alt="Overall Performance" class="figure-img">
-                <div class="figure-caption">Figure 4: Overall Performance on HealthBench</div>
-            </div>
 
+            <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+              <img src="healthbench_combined_bar_chart.pdf" alt="Overall Performance" style="width:49%;">
+              <img src="healthbench_axe_theme_combined.pdf" alt="Detailed Performance" style="width:49%;">
+            </div>
             <div class="highlight-box">
                 <strong>Key Finding:</strong> MuSeR achieves significant performance improvement on 4 out of 5 axes compared to the backbone model, especially on the context-awareness axis (+19.4%). Regarding the themes, MuSeR achieves improvements on all themes and achieves the best performance on 6 out of 7 themes among all compared models, demonstrating the effectiveness of the proposed method across diverse medical scenarios. Notably, Qwen3-32B+MuSeR achieves particularly large improvements compared to the previous SOTA Baichuan-M2-32B on the context seeking (+7.6%), global health (+5.0%), and hedging (responding under uncertainty) (+4.0%) themes, which require strong context-awareness ability to seek missing information, consider the user's background (availability of medical resources in the specific region), and provide cautious advice under uncertainty, respectively.
-            </div>
-            <div class="figure">
-                <img src="healthbench_axe_theme_combined.pdf" alt="Detailed Performance" class="figure-img">
-                <div class="figure-caption">Figure 5: Performance Comparison across axes and themes of HealthBench</div>
             </div>
             <h3>Key Improvements</h3>
             <ul>
