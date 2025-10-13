@@ -351,7 +351,7 @@
             <ol class="method-list">
                 <li>
                     <strong>Attribute-Conditioned Query Generation</strong>
-                    <p>Firstly, we design a query generator to simulate the complexity of real-world query distribution. Specifically, we assume that the real-world query is controlled by a set of attributes (e.g., user role, intent, geographic location). Built on that, the proposed attribute-conditioned query generator first samples a set of attributes from a prior distribution, and then generates a query conditioned on the sampled attributes using a LLM.
+                    <p>Firstly, we design a query generator to simulate the complexity of real-world query distribution. Specifically, we assume that the real-world query is controlled by a set of attributes (e.g., user role, intent, geographic location). Built on that, the proposed attribute-conditioned query generator first samples a set of attributes from a prior distribution, and then generates a query conditioned on the sampled attributes using a LLM. 
     </p>
                     <p>In our framework, we consider a total of seven key attributes for query generation. These attributes are chosen to capture the diversity and complexity of real-world medical queries:</p>
     <ol>
@@ -363,6 +363,7 @@
         <li>📋 Completeness of the provided details (complete, incomplete)</li>
         <li>✍️ Language style (formal, informal)</li>
     </ol>
+                    <p>In our implementation, we generate 100k high-quality queries with the proposed attribute-conditioned query generator using DeepSeek-V3.</p>
                 </li>
                 
                 <li>
@@ -387,6 +388,7 @@
 
                     <li><strong>Multifaceted Self-Refinement:</strong> Following knowledge distillation, the distilled LLM is further employed to generate multifaceted, self-refined responses. The synthesized queries along with the refined answers are then used for supervised fine-tuning of the distilled model, thereby improving its medical context-awareness and response quality.</li>
                 </ul>
+            
             <div class="figure">
                 <img src="knowledge_distill.pdf" alt="Training Strategy" class="figure-img">
                 <div class="figure-caption">Figure 3: The proposed two-phase training strategy.</div>
@@ -398,7 +400,7 @@
             <h2>Experimental Results</h2>
 
             <h3>Performance on HealthBench</h3>
-            <p>We evaluate MuSeR on HealthBench, a new medical benchmark constructed by OpenAI that includes 5,000 realistic health conversations annotated by 262 physicians across 60 countries, evaluating LLMs' performance as medical assistants in real-world scenarios. </p>
+            <p>We evaluate MuSeR on HealthBench, a recent medical benchmark introduced by OpenAI that comprises 5,000 realistic health-related conversations annotated by 262 physicians from 60 countries. HealthBench is designed to assess the performance of LLMs as medical assistants in real-world scenarios. Using Qwen3-32B as the backbone model, the proposed MuSeR framework establishes a new state-of-the-art on HealthBench, ranking #1 among open-source LLMs and #2 overall across all evaluated models:</p>
 
             <div class="metrics">
                 <div class="metric-item">
@@ -419,15 +421,18 @@
                 </div>
             </div>
 
-            <div class="highlight-box">
-                <strong>Key Finding:</strong> By incorporating knowledge distillation with MuSeR, a smaller backbone model (Qwen3-32B) achieves performance that surpasses its teacher model, establishing a new state-of-the-art among all open-source medical LLMs. The most significant improvements are observed in context-awareness metrics, validating our approach's effectiveness in enhancing this critical capability.
-            </div>
-
             <div class="figure">
-                <div class="placeholder-img">Performance Comparison Chart (Add your figure here)</div>
-                <div class="figure-caption">Figure 2: Comparison with baseline models on HealthBench</div>
+                <img src="healthbench_combined_bar_chart.pdf" alt="Overall Performance" class="figure-img">
+                <div class="figure-caption">Figure 4: Overall Performance on HealthBench</div>
             </div>
 
+            <div class="highlight-box">
+                <strong>Key Finding:</strong> MuSeR achieves significant performance improvement on 4 out of 5 axes compared to the backbone model, especially on the context-awareness axis (+19.4%). Regarding the themes, MuSeR achieves improvements on all themes and achieves the best performance on 6 out of 7 themes among all compared models, demonstrating the effectiveness of the proposed method across diverse medical scenarios. Notably, Qwen3-32B+MuSeR achieves particularly large improvements compared to the previous SOTA Baichuan-M2-32B on the context seeking (+7.6%), global health (+5.0%), and hedging (responding under uncertainty) (+4.0%) themes, which require strong context-awareness ability to seek missing information, consider the user's background (availability of medical resources in the specific region), and provide cautious advice under uncertainty, respectively.
+            </div>
+            <div class="figure">
+                <img src="healthbench_axe_theme_combined.pdf" alt="Detailed Performance" class="figure-img">
+                <div class="figure-caption">Figure 5: Performance Comparison across axes and themes of HealthBench</div>
+            </div>
             <h3>Key Improvements</h3>
             <ul>
                 <li>Significant gains in context-awareness across diverse medical scenarios</li>
