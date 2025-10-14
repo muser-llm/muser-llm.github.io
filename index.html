@@ -422,28 +422,92 @@
             </div>
 
 
-            <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
-              <img src="healthbench_combined_bar_chart.pdf" alt="Overall Performance" style="width:49%;">
-              <img src="healthbench_axe_theme_combined.pdf" alt="Detailed Performance" style="width:49%;">
+            <div style="display: flex; justify-content: center; align-items: flex-start; gap: 10px; margin-top: 10px;">
+              <figure style="width: 56%; text-align: center; margin: 0;">
+                <img src="healthbench_combined_bar_chart.pdf" alt="Overall Performance" style="width: 100%; border-radius: 6px;">
+                <figcaption style="margin-top: 6px; font-size: 14px; color: #555;">
+                  Figure 4(a) Overall performance of different models on HealthBench.
+                </figcaption>
+              </figure>
+            
+              <figure style="width: 43%; text-align: center; margin: 0;">
+                <img src="healthbench_axe_theme_combined.pdf" alt="Detailed Performance" style="width: 100%; border-radius: 6px;">
+                <figcaption style="margin-top: 6px; font-size: 14px; color: #555;">
+                  Figure 4(b) Category-wise detailed performance analysis.
+                </figcaption>
+              </figure>
             </div>
             <div class="highlight-box">
                 <strong>Key Finding:</strong> MuSeR achieves significant performance improvement on 4 out of 5 axes compared to the backbone model, especially on the context-awareness axis (+19.4%). Regarding the themes, MuSeR achieves improvements on all themes and achieves the best performance on 6 out of 7 themes among all compared models, demonstrating the effectiveness of the proposed method across diverse medical scenarios. Notably, Qwen3-32B+MuSeR achieves particularly large improvements compared to the previous SOTA Baichuan-M2-32B on the context seeking (+7.6%), global health (+5.0%), and hedging (responding under uncertainty) (+4.0%) themes, which require strong context-awareness ability to seek missing information, consider the user's background (availability of medical resources in the specific region), and provide cautious advice under uncertainty, respectively.
             </div>
-            <h3>Key Improvements</h3>
-            <ul>
-                <li>Significant gains in context-awareness across diverse medical scenarios</li>
-                <li>Enhanced ability to identify missing or critical information in user queries</li>
-                <li>Improved safety in responses, particularly for ambiguous or high-risk situations</li>
-                <li>Better adaptation of communication style to different user contexts and needs</li>
-                <li>Superior performance in both standard and challenging test cases</li>
-            </ul>
+            <div style="text-align: center; margin: 1em 0;">
+  <p><strong>Table 1:</strong> Ablation study on the effectiveness of each training stage in the proposed MuSeR framework. QueryKD: the query-guided knowledge distillation stage using GPT-oss-120B as the teacher; MultifacetedSR: multifaceted self-refinement learning stage.</p>
 
+  <table style="border-collapse: collapse; margin: 0 auto; text-align: center; font-family: Arial, sans-serif; width: 90%;">
+    <thead>
+      <tr style="background-color: #f5f5f5;">
+        <th rowspan="2" style="border: 1px solid #ccc; padding: 8px;">Method</th>
+        <th colspan="2" style="border: 1px solid #ccc; padding: 8px;">Qwen3-32B</th>
+        <th colspan="2" style="border: 1px solid #ccc; padding: 8px;">Qwen3-14B</th>
+        <th colspan="2" style="border: 1px solid #ccc; padding: 8px;">OpenPangu-7B</th>
+      </tr>
+      <tr style="background-color: #f5f5f5;">
+        <th style="border: 1px solid #ccc; padding: 8px;">Full</th>
+        <th style="border: 1px solid #ccc; padding: 8px;">Hard</th>
+        <th style="border: 1px solid #ccc; padding: 8px;">Full</th>
+        <th style="border: 1px solid #ccc; padding: 8px;">Hard</th>
+        <th style="border: 1px solid #ccc; padding: 8px;">Full</th>
+        <th style="border: 1px solid #ccc; padding: 8px;">Hard</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="border: 1px solid #ccc; padding: 8px;">Base Model</td>
+        <td style="border: 1px solid #ccc; padding: 8px;">46.1</td>
+        <td style="border: 1px solid #ccc; padding: 8px;">12.0</td>
+        <td style="border: 1px solid #ccc; padding: 8px;">43.9</td>
+        <td style="border: 1px solid #ccc; padding: 8px;">11.2</td>
+        <td style="border: 1px solid #ccc; padding: 8px;">29.8</td>
+        <td style="border: 1px solid #ccc; padding: 8px;">0.0</td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid #ccc; padding: 8px;">+QueryKD</td>
+        <td style="border: 1px solid #ccc; padding: 8px;">56.6</td>
+        <td style="border: 1px solid #ccc; padding: 8px;">31.5</td>
+        <td style="border: 1px solid #ccc; padding: 8px;">55.9</td>
+        <td style="border: 1px solid #ccc; padding: 8px;">30.5</td>
+        <td style="border: 1px solid #ccc; padding: 8px;">53.0</td>
+        <td style="border: 1px solid #ccc; padding: 8px;">26.4</td>
+      </tr>
+      <tr style="font-weight: bold; background-color: #fafafa;">
+        <td style="border: 1px solid #ccc; padding: 8px;">+QueryKD + MultifacetedSR (Ours)</td>
+        <td style="border: 1px solid #ccc; padding: 8px;">63.8</td>
+        <td style="border: 1px solid #ccc; padding: 8px;">43.1</td>
+        <td style="border: 1px solid #ccc; padding: 8px;">61.8</td>
+        <td style="border: 1px solid #ccc; padding: 8px;">40.9</td>
+        <td style="border: 1px solid #ccc; padding: 8px;">55.5</td>
+        <td style="border: 1px solid #ccc; padding: 8px;">31.5</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+            <div class="highlight-box">
+                <strong>Ablation of Training Stages:</strong> Experimental results demonstrate that both training stages contribute significantly to the overall performance improvement of the backbone LLMs on the HealthBench dataset and its hard subset. Specifically, the query-guided knowledge distillation (QueryKD) stage brings substantial performance gains (+10.5%, +12.0%, +23.2% for Qwen3-32B, Qwen3-14B, and OpenPangu-7B, respectively), indicating the effectiveness of the synthetic queries in transferring medical knowledge and reasoning skills from the teacher model to the student model. Furthermore, the multifaceted self-refinement stage further enhances the performance of the student model (+7.2%, +5.9%, +2.5% for Qwen3-32B, Qwen3-14B, and OpenPangu-7B, respectively), especially on the hard subset (+11.6%, +10.4%, +5.1% for Qwen3-32B, Qwen3-14B, and OpenPangu-7B, respectively), validating the effectiveness of the proposed multifaceted self-refinement learning framework in enhancing the context-awareness ability of LLMs in the medical domain.
+            </div>
+            
+            <h3>Case Study</h3>
+            <p>We further conduct a case study to qualitatively compare the responses generated by o3 and our proposed method (Qwen3-32B+MuSeR). We observe that the response generated by o3 assume that the rash is caused by the vaccination, which may lead to unsafe advice. In contrast, the response generated by our proposed method actively asks for the duration of the rash with proper reason ("Why it matters"), resulting in a more context-aware and safer response. </p>
             <div class="figure">
-                <div class="placeholder-img">Qualitative Examples (Add your figure here)</div>
-                <div class="figure-caption">Figure 3: Qualitative comparison of responses before and after MuSeR refinement</div>
+                <img src="case.pdf" alt="Training Strategy" class="figure-img">
+                <div class="figure-caption">Figure 5: A case study comparing the responses generated by o3 and Qwen3-32B+MuSeR (Ours).</div>
             </div>
         </section>
-
+        <h3>Conclusion</h3>
+            <ul>
+                <li>We propose a novel Multifaceted Self-Refinement (<strong>MuSeR</strong>) learning framework that enhances LLMs' context-awareness across three key facets (decision-making, communication, and safety) through self-evaluation and refinement, facilitating their application in real-world medical scenarios.</li>
+                <li>Extensive experiments on the HealthBench dataset demonstrate the effectiveness of our method in improving LLM performance, particularly in the context-awareness axis. </li>
+                <li>By incorporating knowledge distillation into our framework, we achieve new state-of-the-art performance among open-source LLMs on the HealthBench dataset (<strong>63.8%</strong>) and the hard subset (<strong>43.1%</strong>) using only 100k generated queries.</li>
+            </ul>
         <section id="resources">
             <h2>Resources</h2>
             <p>We are committed to open science and reproducible research. The following resources will be released upon publication:</p>
@@ -456,32 +520,20 @@
                 </div>
 
                 <div class="resource-card">
-                    <h3>💻 Code</h3>
-                    <p>Complete implementation including training scripts, evaluation pipelines, and data processing tools</p>
-                    <a href="https://anonymous.4open.science/r/MuSeR-EC43">View Repository</a>
-                </div>
-
-                <div class="resource-card">
                     <h3>📊 Dataset</h3>
                     <p>Curated dataset with attribute-conditioned queries and multi-faceted refined responses</p>
                     <a href="#" class="coming-soon">Coming Soon</a>
                 </div>
 
                 <div class="resource-card">
+                    <h3>💻 Code</h3>
+                    <p>Code for constructing the training dataset from scratch.</p>
+                    <a href="https://anonymous.4open.science/r/MuSeR-EC43">View Repository (Coming Soon)</a>
+                </div>
+                
+                <div class="resource-card">
                     <h3>🤖 Model Weights</h3>
                     <p>Pre-trained checkpoints for Qwen3-32B fine-tuned with MuSeR</p>
-                    <a href="#" class="coming-soon">Coming Soon</a>
-                </div>
-
-                <div class="resource-card">
-                    <h3>📚 Documentation</h3>
-                    <p>Comprehensive guides for training, evaluation, and deployment of MuSeR models</p>
-                    <a href="#" class="coming-soon">Coming Soon</a>
-                </div>
-
-                <div class="resource-card">
-                    <h3>🎯 Demo</h3>
-                    <p>Interactive demonstration showcasing MuSeR's context-awareness capabilities</p>
                     <a href="#" class="coming-soon">Coming Soon</a>
                 </div>
             </div>
@@ -492,8 +544,7 @@
             <p>If you find this work useful for your research, please cite:</p>
             <div class="citation-box">
                 <pre>@article{muser2025,
-  title={Enhancing the Medical Context-Awareness Ability of LLMs 
-         via Multifaceted Self-Refinement Learning},
+  title={Enhancing the Medical Context-Awareness Ability of LLMs via Multifaceted Self-Refinement Learning},
   author={Anonymous Authors},
   journal={Under Review},
   year={2025}
