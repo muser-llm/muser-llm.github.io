@@ -1,58 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MuSeR: Enhancing Medical Context-Awareness of LLMs</title>
     <script>
     window.MathJax = {
       tex: {
-        inlineMath: [['\\(', '\\)']],   
-        displayMath: [['\\[', '\\]']],  
-        packages: ['base', 'ams']       
+        inlineMath: [['\\(', '\\)']],
+        displayMath: [['\\[', '\\]']],
+        packages: ['base', 'ams']
       }
     };
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MuSeR: Enhancing Medical Context-Awareness of LLMs</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            line-height: 1.7;
-            color: #333;
             background: #fff;
+            color: #333;
+            line-height: 1.6;
         }
-
         .container {
             max-width: 1100px;
             margin: 0 auto;
             padding: 60px 40px;
         }
-
         header {
             text-align: center;
             margin-bottom: 60px;
         }
-
-        h1 {
+        header h1 {
             font-size: 2.8em;
             font-weight: 600;
             color: #111;
-            margin-bottom: 25px;
+            margin-bottom: 10px;
             line-height: 1.3;
         }
-
         .authors {
             font-size: 1.2em;
             color: #666;
             margin-bottom: 20px;
         }
-
         .links {
             margin-top: 30px;
             display: flex;
@@ -60,33 +54,29 @@
             justify-content: center;
             flex-wrap: wrap;
         }
-
         .links a {
             display: inline-block;
             padding: 12px 28px;
-            background: #2563eb;
-            color: white;
+            color: #2563eb;
             text-decoration: none;
+            border: 2px solid transparent;
             border-radius: 6px;
             font-weight: 500;
-            transition: background 0.3s;
+            transition: all 0.3s;
         }
-
         .links a:hover {
-            background: #1d4ed8;
+            background: #f0f9ff;
+            border-color: #2563eb;
         }
-
         section {
             margin-bottom: 70px;
         }
-
         h2 {
             font-size: 2.2em;
             font-weight: 600;
             color: #111;
             margin-bottom: 30px;
         }
-
         h3 {
             font-size: 1.5em;
             font-weight: 600;
@@ -94,91 +84,54 @@
             margin-top: 35px;
             margin-bottom: 20px;
         }
-
         p {
             font-size: 1.05em;
-            line-height: 1.8;
             margin-bottom: 20px;
             text-align: justify;
         }
-
-        .abstract-text {
-            font-size: 1.1em;
-            line-height: 1.9;
-        }
-
         ul, ol {
             margin-left: 25px;
             margin-bottom: 20px;
         }
-
         li {
             margin-bottom: 12px;
             font-size: 1.05em;
             line-height: 1.7;
         }
-
         .method-list {
-            counter-reset: method-counter;
-            list-style: none;
-            margin-left: 0;
+            list-style: decimal inside;
+            margin-left: 25px;
+            margin-bottom: 20px;
         }
-
         .method-list > li {
-            counter-increment: method-counter;
             margin-bottom: 30px;
-            padding-left: 40px;
-            position: relative;
+            padding-left: 0;
         }
-
         .method-list > li::before {
-            content: counter(method-counter) ".";
-            position: absolute;
-            left: 0;
-            font-size: 1.5em;
-            font-weight: 600;
-            color: #2563eb;
+            content: none;
         }
-
         .method-list > li strong {
-            font-size: 1.2em;
+            font-size: 1.3em;
+            color: #111;
             display: block;
             margin-bottom: 10px;
-            color: #111;
         }
-
         .figure {
             margin: 40px 0;
             text-align: center;
         }
-
         .figure img {
             max-width: 100%;
             height: auto;
-            border: 1px solid #e5e7eb;
+            border: none;
             border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
-
         .figure-caption {
             margin-top: 12px;
             font-size: 0.95em;
             color: #666;
-            font-style: italic;
         }
-
-        .placeholder-img {
-            width: 100%;
-            height: 400px;
-            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #9ca3af;
-            font-size: 1.1em;
-        }
-
         .highlight-box {
             background: #f0f9ff;
             border-left: 4px solid #2563eb;
@@ -186,22 +139,20 @@
             margin: 30px 0;
             border-radius: 4px;
         }
-
         .metrics {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 25px;
             margin: 35px 0;
         }
-
         .metric-item {
-            text-align: center;
+            background: #fff;
             padding: 25px;
-            background: #f9fafb;
+            text-align: center;
             border-radius: 8px;
             border: 1px solid #e5e7eb;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
-
         .metric-value {
             font-size: 2.5em;
             font-weight: 700;
@@ -209,45 +160,62 @@
             display: block;
             margin-bottom: 8px;
         }
-
         .metric-label {
             font-size: 1em;
             color: #666;
         }
-
+        .flex-figures {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .flex-figures figure {
+            text-align: center;
+            margin: 0;
+        }
+        .flex-figures figure:first-child {
+            width: 56%;
+        }
+        .flex-figures figure:last-child {
+            width: 43%;
+        }
+        .flex-figures img {
+            width: 100%;
+            border-radius: 8px;
+        }
+        .figcaption {
+            margin-top: 6px;
+            font-size: 0.875em;
+            color: #555;
+            text-align: center;
+        }
         .resources-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 25px;
             margin-top: 35px;
         }
-
         .resource-card {
             background: #fff;
             border: 1px solid #e5e7eb;
             border-radius: 8px;
             padding: 30px;
             transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
-
-        .resource-card:hover {
-            border-color: #2563eb;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        }
-
         .resource-card h3 {
             margin-top: 0;
             font-size: 1.3em;
             margin-bottom: 12px;
         }
-
         .resource-card p {
             color: #666;
             font-size: 0.98em;
             margin-bottom: 18px;
             text-align: left;
         }
-
         .resource-card a {
             display: inline-block;
             padding: 10px 20px;
@@ -259,17 +227,14 @@
             font-weight: 500;
             transition: background 0.3s;
         }
-
         .resource-card a:hover {
             background: #1d4ed8;
         }
-
         .resource-card a.coming-soon {
             background: #e5e7eb;
             color: #666;
             cursor: not-allowed;
         }
-
         .citation-box {
             background: #f9fafb;
             border: 1px solid #e5e7eb;
@@ -277,7 +242,6 @@
             padding: 25px;
             margin-top: 25px;
         }
-
         .citation-box pre {
             font-family: 'Courier New', monospace;
             font-size: 0.9em;
@@ -285,7 +249,6 @@
             overflow-x: auto;
             color: #333;
         }
-
         footer {
             text-align: center;
             padding: 40px 20px;
@@ -293,25 +256,27 @@
             margin-top: 80px;
             color: #666;
         }
-
         @media (max-width: 768px) {
             .container {
                 padding: 40px 20px;
             }
-
             h1 {
                 font-size: 2em;
             }
-
             h2 {
                 font-size: 1.8em;
             }
-
             .links {
                 flex-direction: column;
             }
-
             .links a {
+                width: 100%;
+                text-align: center;
+            }
+            .flex-figures {
+                flex-direction: column;
+            }
+            .flex-figures figure {
                 width: 100%;
             }
         }
@@ -324,10 +289,8 @@
             <div class="authors">Anonymous Authors</div>
             <div class="links">
                 <a href="#">📄 Paper</a>
-                <a href="https://anonymous.4open.science/r/MuSeR-EC43">💻 Code <br>
-  <span style="font-size: 0.8em; color: white;">(coming soon)</span></a>
-                <a href="#resources">📦 Resources <br>
-  <span style="font-size: 0.8em; color: white;">(coming soon)</span></a>
+                <a href="https://anonymous.4open.science/r/MuSeR-EC43">💻 Code <br><span style="font-size: 0.8em;">(coming soon)</span></a>
+                <a href="#resources">📦 Resources <br><span style="font-size: 0.8em;">(coming soon)</span></a>
             </div>
         </header>
 
@@ -335,7 +298,7 @@
             <h2>Abstract</h2>
             <p class="abstract-text">Large language models (LLMs) have shown great promise in the medical domain, achieving strong performance on several benchmarks. However, they continue to underperform in real-world medical scenarios, which often demand stronger <strong>context-awareness</strong>, i.e., the ability to recognize missing or critical details (e.g., user identity, medical history, risk factors) and provide safe, helpful, and contextually appropriate responses.</p>
             <div class="figure">
-                <img src="example.png" alt="Problem and Method" class="figure-img">
+                <img src="example.png" alt="Problem and Method">
                 <div class="figure-caption">(a) Comparison between medical exam questions and real-world medical scenarios. (b) Overview of the proposed MuSeR framework.</div>
             </div>
             <p class="abstract-text">To address this issue, we propose <strong>Multifaceted Self-Refinement (MuSeR)</strong>, a data-driven approach that enhances LLMs' context-awareness along three key facets (decision-making, communication, and safety) through self-evaluation and refinement. Specifically, we first design an attribute-conditioned query generator that simulates diverse real-world user contexts by varying attributes such as role, geographic region, intent, and degree of information ambiguity. An LLM then responds to these queries, self-evaluates its answers along three key facets, and refines its responses to better align with the requirements of each facet. Finally, the queries and refined responses are used for supervised fine-tuning to reinforce the model's context-awareness ability.</p>
@@ -345,24 +308,22 @@
         
         <section id="method">
             <h2>Method</h2>
-            
             <p>To address the limitations of current medical LLMs in real-world scenarios, we introduce <strong>MuSeR (Multifaceted Self-Refinement)</strong>, a novel approach that enhances LLMs' medical context-awareness by synthesizing simulated real-world medical queries and generating context-aware responses by self-refining the answers of LLMs along diverse facets of context-awareness. Specifically, MuSeR features two core components:</p>
             
             <ol class="method-list">
                 <li>
                     <strong>Attribute-Conditioned Query Generation</strong>
-                    <p>Firstly, we design a query generator to simulate the complexity of real-world query distribution. Specifically, we assume that the real-world query is controlled by a set of attributes (e.g., user role, intent, geographic location). Built on that, the proposed attribute-conditioned query generator first samples a set of attributes from a prior distribution, and then generates a query conditioned on the sampled attributes using a LLM. 
-    </p>
+                    <p>Firstly, we design a query generator to simulate the complexity of real-world query distribution. Specifically, we assume that the real-world query is controlled by a set of attributes (e.g., user role, intent, geographic location). Built on that, the proposed attribute-conditioned query generator first samples a set of attributes from a prior distribution, and then generates a query conditioned on the sampled attributes using a LLM.</p>
                     <p>In our framework, we consider a total of seven key attributes for query generation. These attributes are chosen to capture the diversity and complexity of real-world medical queries:</p>
-    <ol>
-        <li>🧑‍⚕️ User identity (patient, caregiver, or doctor)</li>
-        <li>🌍 Geographic region (country, urban/rural area)</li>
-        <li>🩺 The specific disease or injury being inquired about</li>
-        <li>🎯 User intent (seeking diagnosis, treatment advice, report interpretation, etc.)</li>
-        <li>❓ Vagueness of the intent (clear, vague)</li>
-        <li>📋 Completeness of the provided details (complete, incomplete)</li>
-        <li>✍️ Language style (formal, informal)</li>
-    </ol>
+                    <ol>
+                        <li>🧑‍⚕️ User identity (patient, caregiver, or doctor)</li>
+                        <li>🌍 Geographic region (country, urban/rural area)</li>
+                        <li>🩺 The specific disease or injury being inquired about</li>
+                        <li>🎯 User intent (seeking diagnosis, treatment advice, report interpretation, etc.)</li>
+                        <li>❓ Vagueness of the intent (clear, vague)</li>
+                        <li>📋 Completeness of the provided details (complete, incomplete)</li>
+                        <li>✍️ Language style (formal, informal)</li>
+                    </ol>
                     <p>In our implementation, we generate 100k high-quality queries with the proposed attribute-conditioned query generator using DeepSeek-V3.</p>
                 </li>
                 
@@ -378,22 +339,19 @@
                 </li>
             </ol>
             <div class="figure">
-                <img src="framework.png" alt="Detailed Structure of MuSeR" class="figure-img">
+                <img src="framework.png" alt="Detailed Structure of MuSeR">
                 <div class="figure-caption">Figure 2: The detailed structure of MuSeR.</div>
             </div>
             <h3>Training Strategy</h3>
             <p>We propose a two-stage supervised finetuning to improve LLMs' medical context awareness:</p>
-                <ul>
-                    <li><strong>Query-Guided Knowledge Distillation:</strong> This training phase aims to inject essential medical knowledge and reasoning abilities into the target LLM to support context-aware responses. Specifically, a strong teacher LLM first generates high-quality responses for the synthesized queries, and the target LLM is then fine-tuned to align its outputs with those of the teacher before proceeding to the multifaceted self-refinement stage. We observe that this stage not only enhances the medical knowledge and reasoning capabilities of the student model but also improves the effectiveness of the subsequent self-refinement process.</li>
-
-                    <li><strong>Multifaceted Self-Refinement:</strong> Following knowledge distillation, the distilled LLM is further employed to generate multifaceted, self-refined responses. The synthesized queries along with the refined answers are then used for supervised fine-tuning of the distilled model, thereby improving its medical context-awareness and response quality.</li>
-                </ul>
-            
+            <ul>
+                <li><strong>Query-Guided Knowledge Distillation:</strong> This training phase aims to inject essential medical knowledge and reasoning abilities into the target LLM to support context-aware responses. Specifically, a strong teacher LLM first generates high-quality responses for the synthesized queries, and the target LLM is then fine-tuned to align its outputs with those of the teacher before proceeding to the multifaceted self-refinement stage. We observe that this stage not only enhances the medical knowledge and reasoning capabilities of the student model but also improves the effectiveness of the subsequent self-refinement process.</li>
+                <li><strong>Multifaceted Self-Refinement:</strong> Following knowledge distillation, the distilled LLM is further employed to generate multifaceted, self-refined responses. The synthesized queries along with the refined answers are then used for supervised fine-tuning of the distilled model, thereby improving its medical context-awareness and response quality.</li>
+            </ul>
             <div class="figure">
-                <img src="knowledge_distill.png" alt="Training Strategy" class="figure-img">
+                <img src="knowledge_distill.png" alt="Training Strategy">
                 <div class="figure-caption">Figure 3: The proposed two-phase training strategy.</div>
             </div>
-            
         </section>
 
         <section id="results">
@@ -421,93 +379,87 @@
                 </div>
             </div>
 
-
-            <div style="display: flex; justify-content: center; align-items: flex-start; gap: 10px; margin-top: 10px;">
-              <figure style="width: 56%; text-align: center; margin: 0;">
-                <img src="healthbench_combined_bar_chart.png" alt="Overall Performance" style="width: 100%; border-radius: 6px;">
-                <figcaption style="margin-top: 6px; font-size: 14px; color: #555;">
-                  Figure 4(a) Overall performance of different models on HealthBench.
-                </figcaption>
-              </figure>
-            
-              <figure style="width: 43%; text-align: center; margin: 0;">
-                <img src="healthbench_axe_theme_combined.png" alt="Detailed Performance" style="width: 100%; border-radius: 6px;">
-                <figcaption style="margin-top: 6px; font-size: 14px; color: #555;">
-                  Figure 4(b) Category-wise detailed performance analysis.
-                </figcaption>
-              </figure>
+            <div class="flex-figures">
+                <figure>
+                    <img src="healthbench_combined_bar_chart.png" alt="Overall Performance">
+                    <figcaption class="figcaption">Figure 4(a) Overall performance of different models on HealthBench.</figcaption>
+                </figure>
+                <figure>
+                    <img src="healthbench_axe_theme_combined.png" alt="Detailed Performance">
+                    <figcaption class="figcaption">Figure 4(b) Category-wise detailed performance analysis.</figcaption>
+                </figure>
             </div>
             <div class="highlight-box">
                 <strong>Key Finding:</strong> MuSeR achieves significant performance improvement on 4 out of 5 axes compared to the backbone model, especially on the context-awareness axis (+19.4%). Regarding the themes, MuSeR achieves improvements on all themes and achieves the best performance on 6 out of 7 themes among all compared models, demonstrating the effectiveness of the proposed method across diverse medical scenarios. Notably, Qwen3-32B+MuSeR achieves particularly large improvements compared to the previous SOTA Baichuan-M2-32B on the context seeking (+7.6%), global health (+5.0%), and hedging (responding under uncertainty) (+4.0%) themes, which require strong context-awareness ability to seek missing information, consider the user's background (availability of medical resources in the specific region), and provide cautious advice under uncertainty, respectively.
             </div>
             <div style="text-align: center; margin: 1em 0;">
-  <p><strong>Table 1:</strong> Ablation study on the effectiveness of each training stage in the proposed MuSeR framework. QueryKD: the query-guided knowledge distillation stage using GPT-oss-120B as the teacher; MultifacetedSR: multifaceted self-refinement learning stage.</p>
-
-  <table style="border-collapse: collapse; margin: 0 auto; text-align: center; font-family: Arial, sans-serif; width: 90%;">
-    <thead>
-      <tr style="background-color: #f5f5f5;">
-        <th rowspan="2" style="border: 1px solid #ccc; padding: 8px;">Method</th>
-        <th colspan="2" style="border: 1px solid #ccc; padding: 8px;">Qwen3-32B</th>
-        <th colspan="2" style="border: 1px solid #ccc; padding: 8px;">Qwen3-14B</th>
-        <th colspan="2" style="border: 1px solid #ccc; padding: 8px;">OpenPangu-7B</th>
-      </tr>
-      <tr style="background-color: #f5f5f5;">
-        <th style="border: 1px solid #ccc; padding: 8px;">Full</th>
-        <th style="border: 1px solid #ccc; padding: 8px;">Hard</th>
-        <th style="border: 1px solid #ccc; padding: 8px;">Full</th>
-        <th style="border: 1px solid #ccc; padding: 8px;">Hard</th>
-        <th style="border: 1px solid #ccc; padding: 8px;">Full</th>
-        <th style="border: 1px solid #ccc; padding: 8px;">Hard</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td style="border: 1px solid #ccc; padding: 8px;">Base Model</td>
-        <td style="border: 1px solid #ccc; padding: 8px;">46.1</td>
-        <td style="border: 1px solid #ccc; padding: 8px;">12.0</td>
-        <td style="border: 1px solid #ccc; padding: 8px;">43.9</td>
-        <td style="border: 1px solid #ccc; padding: 8px;">11.2</td>
-        <td style="border: 1px solid #ccc; padding: 8px;">29.8</td>
-        <td style="border: 1px solid #ccc; padding: 8px;">0.0</td>
-      </tr>
-      <tr>
-        <td style="border: 1px solid #ccc; padding: 8px;">+QueryKD</td>
-        <td style="border: 1px solid #ccc; padding: 8px;">56.6</td>
-        <td style="border: 1px solid #ccc; padding: 8px;">31.5</td>
-        <td style="border: 1px solid #ccc; padding: 8px;">55.9</td>
-        <td style="border: 1px solid #ccc; padding: 8px;">30.5</td>
-        <td style="border: 1px solid #ccc; padding: 8px;">53.0</td>
-        <td style="border: 1px solid #ccc; padding: 8px;">26.4</td>
-      </tr>
-      <tr style="font-weight: bold; background-color: #fafafa;">
-        <td style="border: 1px solid #ccc; padding: 8px;">+QueryKD + MultifacetedSR (Ours)</td>
-        <td style="border: 1px solid #ccc; padding: 8px;">63.8</td>
-        <td style="border: 1px solid #ccc; padding: 8px;">43.1</td>
-        <td style="border: 1px solid #ccc; padding: 8px;">61.8</td>
-        <td style="border: 1px solid #ccc; padding: 8px;">40.9</td>
-        <td style="border: 1px solid #ccc; padding: 8px;">55.5</td>
-        <td style="border: 1px solid #ccc; padding: 8px;">31.5</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+                <p><strong>Table 1:</strong> Ablation study on the effectiveness of each training stage in the proposed MuSeR framework. QueryKD: the query-guided knowledge distillation stage using GPT-oss-120B as the teacher; MultifacetedSR: multifaceted self-refinement learning stage.</p>
+                <table style="border-collapse: collapse; margin: 0 auto; text-align: center; font-family: Arial, sans-serif; width: 90%;">
+                    <thead>
+                        <tr style="background-color: #f5f5f5;">
+                            <th rowspan="2" style="border: 1px solid #ccc; padding: 8px;">Method</th>
+                            <th colspan="2" style="border: 1px solid #ccc; padding: 8px;">Qwen3-32B</th>
+                            <th colspan="2" style="border: 1px solid #ccc; padding: 8px;">Qwen3-14B</th>
+                            <th colspan="2" style="border: 1px solid #ccc; padding: 8px;">OpenPangu-7B</th>
+                        </tr>
+                        <tr style="background-color: #f5f5f5;">
+                            <th style="border: 1px solid #ccc; padding: 8px;">Full</th>
+                            <th style="border: 1px solid #ccc; padding: 8px;">Hard</th>
+                            <th style="border: 1px solid #ccc; padding: 8px;">Full</th>
+                            <th style="border: 1px solid #ccc; padding: 8px;">Hard</th>
+                            <th style="border: 1px solid #ccc; padding: 8px;">Full</th>
+                            <th style="border: 1px solid #ccc; padding: 8px;">Hard</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="border: 1px solid #ccc; padding: 8px;">Base Model</td>
+                            <td style="border: 1px solid #ccc; padding: 8px;">46.1</td>
+                            <td style="border: 1px solid #ccc; padding: 8px;">12.0</td>
+                            <td style="border: 1px solid #ccc; padding: 8px;">43.9</td>
+                            <td style="border: 1px solid #ccc; padding: 8px;">11.2</td>
+                            <td style="border: 1px solid #ccc; padding: 8px;">29.8</td>
+                            <td style="border: 1px solid #ccc; padding: 8px;">0.0</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #ccc; padding: 8px;">+QueryKD</td>
+                            <td style="border: 1px solid #ccc; padding: 8px;">56.6</td>
+                            <td style="border: 1px solid #ccc; padding: 8px;">31.5</td>
+                            <td style="border: 1px solid #ccc; padding: 8px;">55.9</td>
+                            <td style="border: 1px solid #ccc; padding: 8px;">30.5</td>
+                            <td style="border: 1px solid #ccc; padding: 8px;">53.0</td>
+                            <td style="border: 1px solid #ccc; padding: 8px;">26.4</td>
+                        </tr>
+                        <tr style="font-weight: bold; background-color: #fafafa;">
+                            <td style="border: 1px solid #ccc; padding: 8px;">+QueryKD + MultifacetedSR (Ours)</td>
+                            <td style="border: 1px solid #ccc; padding: 8px;">63.8</td>
+                            <td style="border: 1px solid #ccc; padding: 8px;">43.1</td>
+                            <td style="border: 1px solid #ccc; padding: 8px;">61.8</td>
+                            <td style="border: 1px solid #ccc; padding: 8px;">40.9</td>
+                            <td style="border: 1px solid #ccc; padding: 8px;">55.5</td>
+                            <td style="border: 1px solid #ccc; padding: 8px;">31.5</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             <div class="highlight-box">
                 <strong>Ablation of Training Stages:</strong> Experimental results demonstrate that both training stages contribute significantly to the overall performance improvement of the backbone LLMs on the HealthBench dataset and its hard subset. Specifically, the query-guided knowledge distillation (QueryKD) stage brings substantial performance gains (+10.5%, +12.0%, +23.2% for Qwen3-32B, Qwen3-14B, and OpenPangu-7B, respectively), indicating the effectiveness of the synthetic queries in transferring medical knowledge and reasoning skills from the teacher model to the student model. Furthermore, the multifaceted self-refinement stage further enhances the performance of the student model (+7.2%, +5.9%, +2.5% for Qwen3-32B, Qwen3-14B, and OpenPangu-7B, respectively), especially on the hard subset (+11.6%, +10.4%, +5.1% for Qwen3-32B, Qwen3-14B, and OpenPangu-7B, respectively), validating the effectiveness of the proposed multifaceted self-refinement learning framework in enhancing the context-awareness ability of LLMs in the medical domain.
             </div>
             
             <h3>Case Study</h3>
-            <p>We further conduct a case study to qualitatively compare the responses generated by o3 and our proposed method (Qwen3-32B+MuSeR). We observe that the response generated by o3 assume that the rash is caused by the vaccination, which may lead to unsafe advice. In contrast, the response generated by our proposed method actively asks for the duration of the rash with proper reason ("Why it matters"), resulting in a more context-aware and safer response. </p>
+            <p>We further conduct a case study to qualitatively compare the responses generated by o3 and our proposed method (Qwen3-32B+MuSeR). We observe that the response generated by o3 assume that the rash is caused by the vaccination, which may lead to unsafe advice. In contrast, the response generated by our proposed method actively asks for the duration of the rash with proper reason ("Why it matters"), resulting in a more context-aware and safer response.</p>
             <div class="figure">
-                <img src="case.png" alt="Training Strategy" class="figure-img">
+                <img src="case.png" alt="Training Strategy">
                 <div class="figure-caption">Figure 5: A case study comparing the responses generated by o3 and Qwen3-32B+MuSeR (Ours).</div>
             </div>
         </section>
         <h3>Conclusion</h3>
             <ul>
                 <li>We propose a novel Multifaceted Self-Refinement (<strong>MuSeR</strong>) learning framework that enhances LLMs' context-awareness across three key facets (decision-making, communication, and safety) through self-evaluation and refinement, facilitating their application in real-world medical scenarios.</li>
-                <li>Extensive experiments on the HealthBench dataset demonstrate the effectiveness of our method in improving LLM performance, particularly in the context-awareness axis. </li>
+                <li>Extensive experiments on the HealthBench dataset demonstrate the effectiveness of our method in improving LLM performance, particularly in the context-awareness axis.</li>
                 <li>By incorporating knowledge distillation into our framework, we achieve new state-of-the-art performance among open-source LLMs on the HealthBench dataset (<strong>63.8%</strong>) and the hard subset (<strong>43.1%</strong>) using only 100k generated queries.</li>
             </ul>
+
         <section id="resources">
             <h2>Resources</h2>
             <p>We are committed to open science and reproducible research. The following resources will be released upon publication:</p>
@@ -522,7 +474,7 @@
                 <div class="resource-card">
                     <h3>📊 Code & Dataset</h3>
                     <p>Code and curated datasets with attribute-conditioned queries and multi-faceted refined responses</p>
-                    <a href="https://anonymous.4open.science/r/MuSeR-EC43">Coming Soon</a>
+                    <a href="https://anonymous.4open.science/r/MuSeR-EC43" class="coming-soon">Coming Soon</a>
                 </div>
                 
                 <div class="resource-card">
